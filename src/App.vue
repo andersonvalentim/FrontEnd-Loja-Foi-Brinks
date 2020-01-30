@@ -128,7 +128,7 @@
     </select>
   </p>
   <p>
-    <label for="nome">Rua</label>
+    <label for="rua">Rua</label>
     <input
       id="rua"
       v-model="cliente.rua"
@@ -138,7 +138,7 @@
 <p>
   
   <p>
-<label for="nome">Bairro</label>
+<label for="bairro">Bairro</label>
     <input
     
       id="bairro"
@@ -149,7 +149,7 @@
 
 <p>
 <label for="CEP">CEP</label>
-    <input id="bairro" v-model="cliente.bairro" type="text" name="bairro" v-mask= "'#####-###'"/> 
+    <input id="cep" v-model="cliente.bairro" type="text" name="bairro" v-mask= "'#####-###'"/> 
   </p>
 
 <p>
@@ -204,11 +204,11 @@
 
 
 
-<!-- 
+
   <p>
 
     <input type="submit" value="Enviar">
-  </p> -->
+  </p> 
 </form>
       
       
@@ -292,7 +292,7 @@ data () {
 
    salvar(){
      
-     Produto.salvar(this.cliente).then(resposta=>{
+     Produto.salvar(this.cliente).then(()=>{
 
        alert('Salvo com Sucesso')
      } )
