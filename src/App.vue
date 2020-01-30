@@ -149,7 +149,7 @@
 
 <p>
 <label for="CEP">CEP</label>
-    <input id="cep" v-model="cliente.bairro" type="text" name="bairro" v-mask= "'#####-###'"/> 
+    <input id="cep" v-model="cliente.cep" type="text" name="cep" v-mask= "'#####-###'"/> 
   </p>
 
 <p>
