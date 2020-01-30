@@ -44,10 +44,10 @@
                             {{produto.faixaEtaria }}</p>
                     </div>
                     <div class="card-footer">
-                        <button type="button" data-toggle="modal" data-target="#venda" class="btn btn-primary">
+                        <button type="button" data-toggle="modal" data-target="#venda" class="btn btn-primary mr-2">
                             Vender
                         </button>
-                        <button type="button" class="btn btn-danger">Excluir</button>
+                        <button type="button" class="btn btn-danger mr-2">Excluir</button>
                         <button type="button" data-toggle="modal" data-target="#atualiza" class="btn btn-warning">
                             Alterar
                         </button>
