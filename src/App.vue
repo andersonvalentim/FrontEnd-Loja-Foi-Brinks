@@ -17,11 +17,14 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"   data-toggle="modal" data-target="#adicionacliente" >Adicionar Clientes</a>
+          <b-button v-b-modal.adicionarclientes> Adicionar Clientes</b-button>
           </li>
+          
+
           <li class="nav-item">
-            <a class="nav-link" data-toggle="modal" data-target="#adicionaproduto">Adicionar Produtos</a>
-          </li>
+           
+           <b-button v-b-modal.modal-1>Launch demo modal</b-button>
+                     </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
           </li>
@@ -82,15 +85,103 @@
  <!-- </tbody> -->
         </div>
         <!-- /.row -->
-
+ 
       </div>
       <!-- /.col-lg-9 -->
+
+<b-modal id="adicionarclientes">
+      <form
+  id="app"
+  @submit="checkForm"
+  action="/cliente"
+  method="post">
+  
+
+  <p>
+    <label for="nome">Nome</label>
+    <input
+
+      id="name"
+      v-model="name"
+      type="text"
+      name="nome"/>
+  </p>
+  <p>
+    <label for="movie">Estado Civil
+    </label>
+    <select
+      id="estadocivil"
+      v-model="estadocivil"
+      name="estadocivil">
+      <option>Casado</option>
+      <option>Solteiro</option>
+      <option>Viuvo</option>
+    </select>
+  </p>
+ <p>
+    <label for="genero">Gênero
+    </label>
+    <select
+      id="genero"
+      v-model="genero"
+      name="estadocivil">
+      <option>M</option>
+      <option>F</option>
+      <option>Outro</option>
+    </select>
+  </p>
+  <p>
+    <label for="nome">Rua</label>
+    <input
+      id="rua"
+      v-model="rua"
+      type="text"
+      name="rua">
+  </p>
+<p>
+  
+  <p>
+<label for="nome">Bairro</label>
+    <input
+    
+      id="bairro"
+      v-model="bairro"
+      type="text"
+      name="bairro">
+  </p>
+
+<p>
+<label for="CEP">CEP</label>
+    <input id="bairro" v-model="bairro" type="text" name="bairro" v-mask= "'#####-###'"/> 
+  </p>
+
+
+
+
+
+
+
+
+  <p>
+
+    <input type="submit" value="Enviar">
+  </p>
+</form>
+      
+      
+      
+      
+          </b-modal>
+
+
+
+      
+
 
     </div>
     <!-- /.row -->
 
   
-
 
 
 
@@ -101,17 +192,35 @@
 </template>
 
 <script>
-
 import Produto from './services/produtos'
 export default{
+mascara() {
+    return {
+      mask: "#####-###",
+    };
+  },  
+
+
+
   
   data(){
     return {
 
       produtos:[]
     }
+
+    
   },
+  data2() {
+      return {
+        name: '',
+        nameState: null,
+        submittedNames: []
+      }
+    },
   
+  
+
   mounted(){
 
     
@@ -126,13 +235,48 @@ export default{
 
     )
 
+  },
+
+
+
+
+
+   methods: {
+      checkFormValidity() {
+        const valid = this.$refs.form.checkValidity()
+        this.nameState = valid
+        return valid
+      },
+      resetModal() {
+        this.name = ''
+        this.nameState = null
+      },
+      handleOk(bvModalEvt) {
+        // Prevent modal from closing
+        bvModalEvt.preventDefault()
+        // Trigger submit handler
+        this.handleSubmit()
+      },
+      handleSubmit() {
+        // Exit when the form isn't valid
+        if (!this.checkFormValidity()) {
+          return
+        }
+        // Push the name to submitted names
+        this.submittedNames.push(this.name)
+        // Hide the modal manually
+        this.$nextTick(() => {
+          this.$bvModal.hide('modal-prevent-closing')
+        })
+      }
+    }
   }
 
-}
 
 
 </script>
 
-<style>
 
+
+<style>
 </style>
