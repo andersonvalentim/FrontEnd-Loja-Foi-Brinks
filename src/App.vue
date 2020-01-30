@@ -26,7 +26,7 @@
            <b-button v-b-modal.modal-1>Launch demo modal</b-button>
                      </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="">Contact</a>
           </li>
         </ul>
       </div>
@@ -90,19 +90,16 @@
       <!-- /.col-lg-9 -->
 
 <b-modal id="adicionarclientes">
-      <form
-  id="app"
-  @submit="checkForm"
-  action="/cliente"
-  method="post">
+  
+  <form id="app" @submit.prevent="salvar" action="/cliente" method="post">
   
 
   <p>
     <label for="nome">Nome</label>
     <input
-
+      label-for="input"
       id="name"
-      v-model="name"
+      v-model="cliente.nomecliente"
       type="text"
       name="nome"/>
   </p>
@@ -111,7 +108,7 @@
     </label>
     <select
       id="estadocivil"
-      v-model="estadocivil"
+      v-model="cliente.estadocivil"
       name="estadocivil">
       <option>Casado</option>
       <option>Solteiro</option>
@@ -123,7 +120,7 @@
     </label>
     <select
       id="genero"
-      v-model="genero"
+      v-model="cliente.genero"
       name="estadocivil">
       <option>M</option>
       <option>F</option>
@@ -134,7 +131,7 @@
     <label for="nome">Rua</label>
     <input
       id="rua"
-      v-model="rua"
+      v-model="cliente.rua"
       type="text"
       name="rua">
   </p>
@@ -145,27 +142,73 @@
     <input
     
       id="bairro"
-      v-model="bairro"
+      v-model="cliente.bairro"
       type="text"
       name="bairro">
   </p>
 
 <p>
 <label for="CEP">CEP</label>
-    <input id="bairro" v-model="bairro" type="text" name="bairro" v-mask= "'#####-###'"/> 
+    <input id="bairro" v-model="cliente.bairro" type="text" name="bairro" v-mask= "'#####-###'"/> 
   </p>
 
+<p>
+<label for="Estado"> Estado  </label>
+<select id="estado" name="estado" v-model="cliente.estado">
+    <option value="AC">Acre</option>
+    <option value="AL">Alagoas</option>
+    <option value="AP">Amapá</option>
+    <option value="AM">Amazonas</option>
+    <option value="BA">Bahia</option>
+    <option value="CE">Ceará</option>
+    <option value="DF">Distrito Federal</option>
+    <option value="ES">Espírito Santo</option>
+    <option value="GO">Goiás</option>
+    <option value="MA">Maranhão</option>
+    <option value="MT">Mato Grosso</option>
+    <option value="MS">Mato Grosso do Sul</option>
+    <option value="MG">Minas Gerais</option>
+    <option value="PA">Pará</option>
+    <option value="PB">Paraíba</option>
+    <option value="PR">Paraná</option>
+    <option value="PE">Pernambuco</option>
+    <option value="PI">Piauí</option>
+    <option value="RJ">Rio de Janeiro</option>
+    <option value="RN">Rio Grande do Norte</option>
+    <option value="RS">Rio Grande do Sul</option>
+    <option value="RO">Rondônia</option>
+    <option value="RR">Roraima</option>
+    <option value="SC">Santa Catarina</option>
+    <option value="SP">São Paulo</option>
+    <option value="SE">Sergipe</option>
+    <option value="TO">Tocantins</option>
+    <option value="EX">Estrangeiro</option>
+</select>
+
+</p>
+
+<p>
+<label for="Cidade"> Cidade   </label>
+<input id="cidade" v-model="cliente.cidade" type="text" name="cidade"/> 
+
+</p>
+  
+
+<p>
+<label for="DataNascimento">Data de Nascimento</label>
+<input id="datanascimento" v-model="cliente.datanascimento" type="text" name="datanascimento" /> 
+
+
+</p>
 
 
 
 
-
-
-
+<!-- 
   <p>
 
     <input type="submit" value="Enviar">
-  </p>
+  </p> -->
 </form>
       
       
@@ -192,6 +235,7 @@
 </template>
 
 <script>
+
 import Produto from './services/produtos'
 export default{
 mascara() {
@@ -203,23 +247,30 @@ mascara() {
 
 
   
-  data(){
+data () {
     return {
-
-      produtos:[]
+      produto:{
+        id: '',
+        nome: '',
+        quantidade: '',
+        valor: ''
+      },
+      cliente:{
+       nomecompleto: '',
+      estadocivil: '',
+      genero:'',
+      rua:'',
+      bairro:'',
+      estado:'',
+      cidade:'',
+     datanascimento:''
+      },
+      produtos: [],
+      errors: []
     }
-
-    
   },
-  data2() {
-      return {
-        name: '',
-        nameState: null,
-        submittedNames: []
-      }
-    },
-  
-  
+    
+
 
   mounted(){
 
@@ -237,11 +288,25 @@ mascara() {
 
   },
 
+ methods:{
+
+   salvar(){
+     
+     Produto.salvar(this.cliente).then(resposta=>{
+
+       alert('Salvo com Sucesso')
+     } )
+
+
+   }
 
 
 
+ }
 
-   methods: {
+
+
+  /*methods: {
       checkFormValidity() {
         const valid = this.$refs.form.checkValidity()
         this.nameState = valid
@@ -269,7 +334,7 @@ mascara() {
           this.$bvModal.hide('modal-prevent-closing')
         })
       }
-    }
+    }*/
   }
 
 
