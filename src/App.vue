@@ -99,7 +99,7 @@
     <input
       label-for="input"
       id="name"
-      v-model="cliente.nomecliente"
+      v-model="cliente.nomecompleto"
       type="text"
       name="nome"/>
   </p>
@@ -257,6 +257,7 @@ data () {
       },
       cliente:{
        nomecompleto: '',
+       cpf:'',
       estadocivil: '',
       genero:'',
       rua:'',

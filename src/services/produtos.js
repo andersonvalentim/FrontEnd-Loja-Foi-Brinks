@@ -5,9 +5,9 @@ export default{
     listar:()=>{
         return http.get('produtos')
     },
-     salvar:(clientes)=>{
+     salvar:(cliente)=>{
 
-        return http.post('produtos',clientes)
+        return http.post('clientes',cliente)
     }
 
 }
