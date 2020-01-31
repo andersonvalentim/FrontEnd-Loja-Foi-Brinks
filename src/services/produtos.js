@@ -1,13 +1,13 @@
-import { http } from './config'
+import {http} from './config'
 
-export default{
+export default {
 
-    listar:()=>{
-        return http.get('produtos')
+    listar: () => {
+        return http.get('')
     },
-     salvar:(clientes)=>{
+    salvar: (clientes) => {
 
-        return http.post('produtos',clientes)
+        return http.post('', clientes)
     }
 
 }

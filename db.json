@@ -1,0 +1,53 @@
+{
+  "produtos": [
+    {
+      "idProdutos": 1,
+      "nomeProduto": "Max Steel",
+      "marca": "Mattel",
+      "faixaEtaria": "10 a 15",
+      "altura": 60.0,
+      "largura": 58.0,
+      "profundidade": 32.0,
+      "peso": 0.5,
+      "preco": 15.5,
+      "dataDeCadastro": "2019-12-02"
+    },
+    {
+      "idProdutos": 2,
+      "nomeProduto": "Barbie",
+      "marca": "Mattel",
+      "faixaEtaria": "1 a 5",
+      "altura": 1.3,
+      "largura": 2.3,
+      "profundidade": 10.0,
+      "peso": 10.5,
+      "preco": 10.5,
+      "dataDeCadastro": "2019-12-17"
+    },
+    {
+      "idProdutos": 3,
+      "nomeProduto": "Hotwells",
+      "marca": "Mattel",
+      "faixaEtaria": "1 a 10",
+      "altura": 1.3,
+      "largura": 2.3,
+      "profundidade": 10.0,
+      "peso": 10.5,
+      "preco": 100.0,
+      "dataDeCadastro": "2019-12-17"
+    },
+    {
+      "idProdutos": 4,
+      "nomeProduto": "Calango",
+      "marca": "Mattel",
+      "faixaEtaria": "1 a 5",
+      "altura": 1.3,
+      "largura": 2.3,
+      "profundidade": 10.0,
+      "peso": 10.5,
+      "preco": 5.0,
+      "dataDeCadastro": "2019-12-17"
+    }
+  ]
+}
+
