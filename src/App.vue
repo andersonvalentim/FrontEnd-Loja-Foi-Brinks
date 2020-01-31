@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div id="app">
 <!-- Navigation -->
   
@@ -197,45 +198,31 @@
 <p>
 <label for="DataNascimento">Data de Nascimento</label>
 <input id="datanascimento" v-model="cliente.datanascimento" type="text" name="datanascimento" /> 
+=======
+    <div id="app">
+        <!-- Navigation -->
+        <Cabecalho />
+>>>>>>> 46ff296b7d5f318c37519bcbb294d80503f4ae8d
+
+        <!-- Conteudo -->
+        <Conteudo />
 
 
-</p>
-
-
-
-
-
-  <p>
-
-    <input type="submit" value="Enviar">
-  </p> 
-</form>
-      
-      
-      
-      
-          </b-modal>
-
-
-
-      
-
+        <!-- Modais-->
+        <AddClientes/>
 
     </div>
     <!-- /.row -->
 
-  
 
-
-
-
-    
-
-    
 </template>
 
 <script>
+    import Cabecalho from "./components/layout/Cabecalho";
+    import Conteudo from "./components/Conteudo";
+    import AddClientes from "./components/modal/AddClientes";
 
+<<<<<<< HEAD
 import Produto from './services/produtos'
 export default{
 mascara() {
@@ -272,76 +259,48 @@ data () {
   },
     
 
+=======
+    export default {
+        components: {
+            Cabecalho, Conteudo, AddClientes
+        }
+>>>>>>> 46ff296b7d5f318c37519bcbb294d80503f4ae8d
 
-  mounted(){
 
-    
-    Produto.listar().then(resposta=>{
-    
-    this.produtos= resposta.data 
 
+        /*methods: {
+            checkFormValidity() {
+              const valid = this.$refs.form.checkValidity()
+              this.nameState = valid
+              return valid
+            },
+            resetModal() {
+              this.name = ''
+              this.nameState = null
+            },
+            handleOk(bvModalEvt) {
+              // Prevent modal from closing
+              bvModalEvt.preventDefault()
+              // Trigger submit handler
+              this.handleSubmit()
+            },
+            handleSubmit() {
+              // Exit when the form isn't valid
+              if (!this.checkFormValidity()) {
+                return
+              }
+              // Push the name to submitted names
+              this.submittedNames.push(this.name)
+              // Hide the modal manually
+              this.$nextTick(() => {
+                this.$bvModal.hide('modal-prevent-closing')
+              })
+            }
+          }*/
     }
 
 
-
-
-    )
-
-  },
-
- methods:{
-
-   salvar(){
-     
-     Produto.salvar(this.cliente).then(()=>{
-
-       alert('Salvo com Sucesso')
-     } )
-
-
-   }
-
-
-
- }
-
-
-
-  /*methods: {
-      checkFormValidity() {
-        const valid = this.$refs.form.checkValidity()
-        this.nameState = valid
-        return valid
-      },
-      resetModal() {
-        this.name = ''
-        this.nameState = null
-      },
-      handleOk(bvModalEvt) {
-        // Prevent modal from closing
-        bvModalEvt.preventDefault()
-        // Trigger submit handler
-        this.handleSubmit()
-      },
-      handleSubmit() {
-        // Exit when the form isn't valid
-        if (!this.checkFormValidity()) {
-          return
-        }
-        // Push the name to submitted names
-        this.submittedNames.push(this.name)
-        // Hide the modal manually
-        this.$nextTick(() => {
-          this.$bvModal.hide('modal-prevent-closing')
-        })
-      }
-    }*/
-  }
-
-
-
 </script>
-
 
 
 <style>
