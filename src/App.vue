@@ -10,21 +10,21 @@
 
         <!-- Modais-->
         <AddClientes/>
-
-    </div>
+     
+    <ListarClientes/>
     <!-- /.row -->
 
-
+  </div>
 </template>
 
 <script>
     import Cabecalho from "./components/layout/Cabecalho";
     import Conteudo from "./components/Conteudo";
     import AddClientes from "./components/modal/AddClientes";
-
+    import ListarClientes from "./components/modal/ListarCliente"
     export default {
         components: {
-            Cabecalho, Conteudo, AddClientes
+            Cabecalho, Conteudo, AddClientes,ListarClientes
         }
 
 

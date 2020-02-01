@@ -1,5 +1,5 @@
 <template>
-    <b-modal id="adicionarclientes">
+    <b-modal  v-model="show" id="adicionarclientes">
 
         <form id="app" @submit.prevent="salvar">
 
@@ -10,7 +10,7 @@
                     <input
                             label-for="input"
                             id="name"
-                            v-model="cliente.nomecliente"
+                            v-model="cliente.nomecompleto"
                             type="text"
                             name="nome"
                             class="form-control"
@@ -18,11 +18,11 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="estadocivil">Estado Civil</label>
+                <label class="col-sm-3 col-form-label" for="estado_civil">Estado Civil</label>
                 <div class="col-sm-9">
                     <select
                             id="estadocivil"
-                            v-model="cliente.estadocivil"
+                            v-model="cliente.estado_civil"
                             name="estadocivil"
                             class="form-control"
                     >
@@ -45,6 +45,20 @@
                         <option>F</option>
                         <option>Outro</option>
                     </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="cep">CPF</label>
+                <div class="col-sm-9">
+                    <input
+                            id="cep"
+                            v-model="cliente.cpf"
+                            type="text"
+                            name="cep"
+                            v-mask="'###-###-###-##'"
+                            class="form-control"
+                    />
                 </div>
             </div>
             <div class="form-group row">
@@ -146,19 +160,48 @@
                 <div class="col-sm-9">
                     <input
                             id="datanascimento"
-                            v-model="cliente.datanascimento"
+                            v-model="cliente.data_nascimento"
                             type="text"
                             name="datanascimento"
+                            v-mask="'##-##-####'"
                             class="form-control"
                     />
                 </div>
             </div>
 
-
             <div class="form-group row">
-                <input type="submit" value="Enviar">
-            </div>
+                <input type="submit" value="Enviar" variant="primary" size="sm" class="float-right" >
+            </div> 
         </form>
+
+ <template v-slot:modal-footer>
+        <div class="w-100">
+          <p class="float-left">Modal Footer Content</p>
+          <b-button
+            variant="primary"
+            size="sm"
+            class="float-right"
+            click="show=false"
+          >
+            Close
+          </b-button>
+
+
+
+<!-- 
+<template v-slot:modal-footer>
+        <div class="w-100">
+          
+<b-button  variant="primary"   size="sm" class="float-right, btn btn-danger mr-2"  @click="show=false" >
+            Cancelar
+          </b-button>
+
+          <b-button   type="submit" value="Enviar" variant="primary" size="sm" class="float-right, btn btn-danger mr-2"  @click="show=false">
+            Fechar
+          </b-button> -->
+        </div>
+      </template>
+
 
 
     </b-modal>
@@ -177,8 +220,12 @@
         methods: {
             salvar() {
                 Produto.salvar(this.cliente).then(() => {
-                    alert('Salvo com Sucesso')
-                    this.client = {}
+                                  this.cliente = {}
+
+             alert('Salvo com Sucesso')
+
+
+              this.listar()
                 })
             }
         }
