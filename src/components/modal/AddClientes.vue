@@ -309,13 +309,9 @@ this.listarcliente()
                 }
                 
 
-
                 )
                 }
             },
-
-
-
 editar(cliente){
       this.cliente = cliente
     },

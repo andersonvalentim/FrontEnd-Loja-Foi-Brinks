@@ -23,6 +23,12 @@
  <AddClientes/>
 
       </b-tab>
+
+        <b-tab title="Adicionar Produto">
+
+ <AdicionarProduto/>
+
+      </b-tab>
     </b-tabs>
   </b-card>
 </div>
@@ -49,9 +55,11 @@
    import Cabecalho from "./components/layout/Cabecalho.vue";
     import AddClientes from "./components/modal/AddClientes.vue";
     import Conteudo from "./components/Conteudo";
+    import AdicionarProduto from "./components/modal/AdicionarProduto.vue";
+
     export default {
         components: {
-            Cabecalho,AddClientes,Conteudo
+            Cabecalho,AddClientes,Conteudo,AdicionarProduto
         }
        
     }

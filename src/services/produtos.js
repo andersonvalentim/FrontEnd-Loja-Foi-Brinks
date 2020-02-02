@@ -13,6 +13,9 @@ export default {
 
         return http.post('clientes', clientes)
     },
+    adicionarproduto:(produtos)=>{
+		return http.put('produtos',produtos);
+  },
     listarcliente: () => {
         return http.get('clientes')
     },
