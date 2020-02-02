@@ -26,4 +26,3 @@ Vue.component('modal', {
 new Vue({
   render: h => h(App),
 }).$mount('#app')
-

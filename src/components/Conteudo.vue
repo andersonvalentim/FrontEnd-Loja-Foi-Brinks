@@ -66,7 +66,6 @@
 
 <script>
     import Produto from "../services/produtos";
-
     export default {
         name: 'Conteudo',
         data() {
@@ -86,5 +85,4 @@
 </script>
 
 <style scoped>
-
 </style>

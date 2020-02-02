@@ -2,6 +2,10 @@ import {http} from './config'
 
 export default {
 
+
+    atualizar:(clientes)=>{
+		return http.put('clientes',clientes);
+  },
     listar: () => {
         return http.get('produtos')
     },
@@ -11,6 +15,12 @@ export default {
     },
     listarcliente: () => {
         return http.get('clientes')
-    }
+    },
+
+    apagar: (cliente) =>{
+
+        return http.delete('clientes',{data:cliente})
+
+    },
 
 }

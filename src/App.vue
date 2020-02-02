@@ -1,66 +1,60 @@
 <template>
   <div id="app">
+
+<div class="container">
+
+<div>
+  <b-card no-body>
+    <b-tabs card>
+      <b-tab title="Lista de Produtos" active>
+        <b-card-text>
+            
+<Conteudo />            
+            
+            
+            </b-card-text>
+      
+      
+      
+      
+      </b-tab>
+      <b-tab title="Adicionar e Listar Cliente">
+
+ <AddClientes/>
+
+      </b-tab>
+    </b-tabs>
+  </b-card>
+</div>
+
+
+        </div>
+
 <!-- Navigation -->
   <Cabecalho />
 
   <!-- Navigation -->
         <!-- Conteudo -->
-        <Conteudo />
-
+        
 
         <!-- Modais-->
-        <AddClientes/>
+       
      
-    <ListarClientes/>
     <!-- /.row -->
 
   </div>
 </template>
 
 <script>
-    import Cabecalho from "./components/layout/Cabecalho";
+   import Cabecalho from "./components/layout/Cabecalho.vue";
+    import AddClientes from "./components/modal/AddClientes.vue";
     import Conteudo from "./components/Conteudo";
-    import AddClientes from "./components/modal/AddClientes";
-    import ListarClientes from "./components/modal/ListarCliente"
     export default {
         components: {
-            Cabecalho, Conteudo, AddClientes,ListarClientes
+            Cabecalho,AddClientes,Conteudo
         }
-
-
-
-        /*methods: {
-            checkFormValidity() {
-              const valid = this.$refs.form.checkValidity()
-              this.nameState = valid
-              return valid
-            },
-            resetModal() {
-              this.name = ''
-              this.nameState = null
-            },
-            handleOk(bvModalEvt) {
-              // Prevent modal from closing
-              bvModalEvt.preventDefault()
-              // Trigger submit handler
-              this.handleSubmit()
-            },
-            handleSubmit() {
-              // Exit when the form isn't valid
-              if (!this.checkFormValidity()) {
-                return
-              }
-              // Push the name to submitted names
-              this.submittedNames.push(this.name)
-              // Hide the modal manually
-              this.$nextTick(() => {
-                this.$bvModal.hide('modal-prevent-closing')
-              })
-            }
-          }*/
+       
     }
-
-
 </script>
 
 

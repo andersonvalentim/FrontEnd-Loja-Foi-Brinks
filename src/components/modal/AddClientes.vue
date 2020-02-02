@@ -1,6 +1,5 @@
 <template>
-    <b-modal  v-model="show" id="adicionarclientes">
-
+<b-container fluid>
         <form id="app" @submit.prevent="salvar">
 
 
@@ -20,12 +19,7 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="estado_civil">Estado Civil</label>
                 <div class="col-sm-9">
-                    <select
-                            id="estadocivil"
-                            v-model="cliente.estado_civil"
-                            name="estadocivil"
-                            class="form-control"
-                    >
+                    <select id="estadocivil"  v-model="cliente.estadoCivil" name="estadocivil" class="form-control">        
                         <option>Casado</option>
                         <option>Solteiro</option>
                         <option>Viuvo</option>
@@ -35,12 +29,7 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="genero">Gênero</label>
                 <div class="col-sm-9">
-                    <select
-                            id="genero"
-                            v-model="cliente.genero"
-                            name="estadocivil"
-                            class="form-control"
-                    >
+                    <select  id="genero" v-model="cliente.genero" name="genero" class="form-control">
                         <option>M</option>
                         <option>F</option>
                         <option>Outro</option>
@@ -156,14 +145,17 @@
             </div>
 
             <div class="form-group row">
+   
                 <label class="col-sm-3 col-form-label" for="datanascimento">Nascimento</label>
                 <div class="col-sm-9">
-                    <input
+
+                    
+                <input
                             id="datanascimento"
-                            v-model="cliente.data_nascimento"
-                            type="text"
+                            v-model="cliente.dataNascimento"
+                            v-mask="'##/##/####'"
+
                             name="datanascimento"
-                            v-mask="'##-##-####'"
                             class="form-control"
                     />
                 </div>
@@ -174,64 +166,186 @@
             </div> 
         </form>
 
- <template v-slot:modal-footer>
-        <div class="w-100">
-          <p class="float-left">Modal Footer Content</p>
-          <b-button
-            variant="primary"
-            size="sm"
-            class="float-right"
-            click="show=false"
-          >
-            Close
-          </b-button>
+ <div>
+
+     <div class="table table-sm">
+<table class="table">
+        <thead>
+
+          <tr>
+            <th>Nome </th>
+            <th>Estado Civil</th>
+            <th>Genero</th>
+            <th>Rua</th>
+            <th>Bairro</th>
+            <th>Estado</th>
+            <th>Cidade </th>
+            <th>Data Nascimento</th>
+            <th>CEP</th>
+            <th>CPF</th>
+          </tr>
+
+        </thead>
+
+        <tbody >
+
+          <tr v-for="cliente of clientes" :key="cliente.idCliente">
+
+            <td  >{{cliente.nomecompleto }}</td>
+            <td >{{ cliente.estadoCivil}}</td>
+            <td >{{ cliente.genero}}</td>
+            <td >{{ cliente.rua }}</td>
+            <td> {{ cliente.bairro }}</td>
+            <td> {{ cliente.estado }}</td>
+            <td> {{ cliente.cidade }}</td>
+            <td> {{ cliente.dataNascimento }}</td>
+            <td> {{ cliente.cep}}</td>
+            <td> {{ cliente.cpf}}</td>    
+            <td>
+                <b-button @click="remover(cliente)" variant="danger">Excluir</b-button>
+                <b-button @click="editar(cliente)" variant="outline-primary">Alterar</b-button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+      
+      </table>
+
+     </div>
 
 
 
-<!-- 
-<template v-slot:modal-footer>
-        <div class="w-100">
-          
-<b-button  variant="primary"   size="sm" class="float-right, btn btn-danger mr-2"  @click="show=false" >
-            Cancelar
-          </b-button>
-
-          <b-button   type="submit" value="Enviar" variant="primary" size="sm" class="float-right, btn btn-danger mr-2"  @click="show=false">
-            Fechar
-          </b-button> -->
-        </div>
-      </template>
+ </div>
+</b-container>
 
 
 
-    </b-modal>
+
 </template>
 
 <script>
     import Produto from "../../services/produtos";
-
+    
     export default {
         name: 'ModalAddClientes',
-        data () {
+
+       
+data () {
             return {
-                cliente: {}
+                cliente: {
+                  /*  idCliente:'idCliente',
+                    nomecompleto:'nomecompleto',
+                    estadoCivil:'estadoCivil',
+                    genero:'genero',
+                    rua:'rua',
+                    bairro:'bairro',
+                    estado:'estado',
+                    cidade:'cidade',
+                    dataNascimento:'dataNascimento',
+                    cadastroSistema:'cadastroSistema',
+                    cep:'cep',
+                    cpf:'cpf',
+*/
+
+                },
+                clientes:[],
+
+        generoop: [
+      
+          { value: 'Masculino', text: 'Masculino' },
+          { value: 'Feminino', text: 'Feminino' },
+          { value: 'Outro', text: 'Outro' }
+          
+        ],
+              componentKey: 0,
+
+            
+            
             }
         },
+        
+
+
+        
+
+
+
+        mounted(){
+
+this.listarcliente()
+
+        },
         methods: {
+
+              listarcliente(){
+            
+           Produto.listarcliente().then(resposta => {  
+                  this.clientes = resposta.data
+                }
+            )
+
+          },
             salvar() {
+                if(!this.cliente.idCliente){
+                        
                 Produto.salvar(this.cliente).then(() => {
                                   this.cliente = {}
-
              alert('Salvo com Sucesso')
-
-
-              this.listar()
+              this.listarcliente();
                 })
-            }
-        }
+
+                }else{
+
+                Produto.atualizar(this.cliente).then(()=>{
+          this.cliente = {}
+          this.errors = {}
+          alert('Atualizado com sucesso!')
+          this.listarcliente();
+                
+
+
+                }
+                
+
+
+                )
+                }
+            },
+
+
+
+editar(cliente){
+      this.cliente = cliente
+    },
+
+ remover(cliente){
+      if(confirm('Deseja excluir o produto?')){
+        Produto.apagar(cliente).then(() => {
+       this.listarcliente();
+this.errors = {}
+
+this.cliente = {}
+        }).catch(e => {
+          this.errors = e.response.data.errors
+        })
+      }
+    }
+  },
+
+
+
+
+
+        
     }
 </script>
 
+
+td, th {
+    text-align: center;
+}
 <style scoped>
 
 </style>
