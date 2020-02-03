@@ -298,7 +298,7 @@ this.listarcliente()
 
                 }else{
 
-                Produto.atualizar(this.cliente).then(()=>{
+         Produto.atualizar(this.cliente).then(()=>{
           this.cliente = {}
           this.errors = {}
           alert('Atualizado com sucesso!')

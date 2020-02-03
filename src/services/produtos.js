@@ -16,6 +16,17 @@ export default {
     adicionarproduto:(produtos)=>{
 		return http.put('produtos',produtos);
   },
+
+  deleteprodutos:(produtos)=>{
+    return http.delete('produtos',{data:produtos});
+},
+
+
+    atualizarProduto:(produtos)=>{
+
+        return http.put('clientes',produtos);
+
+    },
     listarcliente: () => {
         return http.get('clientes')
     },

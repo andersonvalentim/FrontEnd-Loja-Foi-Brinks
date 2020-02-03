@@ -56,7 +56,7 @@
                     <input  
                             label-for="input"
                             id="name"
-                            v-model="produto.altura"
+                            v-model.number="produto.altura"
                             type="text"
                             name="nome"
                             class="form-control"
@@ -70,8 +70,8 @@
                     <input  
                             label-for="input"
                             id="name"
-                            v-model="produto.largura"
-                            type="text"
+                            v-model.number="produto.largura"
+                            type="texts"
                             name="nome"
                             class="form-control"
                     />
@@ -84,7 +84,7 @@
                     <input  
                             label-for="input"
                             id="name"
-                            v-model="produto.profundidade"
+                            v-model.number="produto.profundidade"
                             type="text"
                             name="nome"
                             class="form-control"
@@ -97,10 +97,10 @@
                 <div class="col-sm-9">
                     <input  
                             label-for="input"
-                            id="name"
-                            v-model="produto.peso"
+                            id="altera"
+                            v-model.number="produto.peso"
                             type="text"
-                            name="nome"
+                            name="altera"
                             class="form-control"
                     />
                 </div>
@@ -111,7 +111,7 @@
                     <input  
                             label-for="input"
                             id="preco"
-                            v-model="produto.preco"
+                            v-model.number="produto.preco"
                             type="text"
                             name="preco"
                             class="form-control"
@@ -150,6 +150,7 @@
         <div class="row">
             <!--<tbody>-->
             <!--<tr >-->
+          
             <div class="col-lg-4 col-md-6 mb-4" v-for="produto of produtos" :key="produto.id">
                 <div class="card h-100">
                     <div class="card-body">
@@ -164,8 +165,8 @@
                         <button type="button" data-toggle="modal" data-target="#venda" class="btn btn-primary mr-2">
                             Vender
                         </button>
-                        <button type="button" class="btn btn-danger mr-2">Excluir</button>
-                        <button type="button" data-toggle="modal" data-target="#atualiza" class="btn btn-warning">
+                        <button type="button" @click="remover(produto)"  class="btn btn-danger mr-2">Excluir</button>
+                        <button type="button" @click="editar(produto)" data-toggle="modal" data-target="#atualiza" class="btn btn-warning">
                             Alterar
                         </button>
                     </div>
@@ -182,18 +183,7 @@
 
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-    
+   
 </template>
 
 <script>
@@ -215,14 +205,62 @@
 
         methods: {
 
+
+remover(produto){
+      if(confirm('Deseja excluir o produto?')){
+        Produto.deleteprodutos(produto).then(() => {
+       this.listarProdutos();
+this.errors = {}
+
+this.produto = {}
+        }).catch(e => {
+          this.errors = e.response.data.errors
+        })
+      }
+    },
+
+
+
+
+editar(produto){
+      this.produto= produto
+    },
+
+
+
+
+
+
 salvarproduto() {
         
-         Produto.adicionarproduto(this.produto).then(() => {  
+         if(!this.produtos.idProdutos){
+
+
+                Produto.adicionarproduto(this.produto).then(() => {  
                 alert('Salvo com Sucesso')
                 this.produto={}
                 this.listarProdutos();
                 }
             )
+
+
+         }else{
+
+
+
+             
+         Produto.atualizarProduto(this.produto).then(()=>{
+          this.produto = {}
+          this.errors = {}
+          alert('Atualizado com sucesso!')
+          this.listarcliente();
+                
+
+
+                })
+         }
+
+        
 
           },
 
