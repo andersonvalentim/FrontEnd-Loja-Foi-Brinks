@@ -1,8 +1,13 @@
 import {http} from './config'
 
 export default {
+    listarvendedor:()=>{
+        return http.get('vendedor')
 
-
+    },
+   efetuarvendas:(vendas)=>{
+return http.post('vendas',vendas)
+   },
     atualizar:(clientes)=>{
 		return http.put('clientes',clientes);
   },

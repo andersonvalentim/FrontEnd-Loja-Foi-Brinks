@@ -71,7 +71,7 @@
                             label-for="input"
                             id="name"
                             v-model.number="produto.largura"
-                            type="texts"
+                            type="text"
                             name="nome"
                             class="form-control"
                     />
@@ -112,7 +112,7 @@
                             label-for="input"
                             id="preco"
                             v-model.number="produto.preco"
-                            type="text"
+                            type="number"
                             name="preco"
                             class="form-control"
                     />
@@ -122,12 +122,7 @@
                 <input type="submit" value="Enviar" variant="primary" size="sm" class="float-right" >
             </div> 
 </form>   
-
-
-
-
-
-        <div class="row">
+      <div class="row">
             <div class="col-12">
 
         <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
@@ -162,7 +157,7 @@
                             {{produto.faixaEtaria }}</p>
                     </div>
                     <div class="card-footer">
-                        <button type="button" data-toggle="modal" data-target="#venda" class="btn btn-primary mr-2">
+                        <button type="button" @click="vender(produto)" v-b-modal.modalvenda data-toggle="modal" data-target="#venda" class="btn btn-primary mr-2">
                             Vender
                         </button>
                         <button type="button" @click="remover(produto)"  class="btn btn-danger mr-2">Excluir</button>
@@ -179,11 +174,100 @@
 
     </div>
         </div>
+<b-modal id="modalvenda" title="Venda">
+
+<form id="app" @submit.prevent="efetuarvenda">
+
+<div class="form-group row"  >
+                <label class="col-sm-3 col-form-label" for="faixa_etaria">Vendedor</label>
+                <div class="col-sm-9">
+                    <select
+                            id="vendedor"
+                            v-model="vendedor.NomeVendedor"
+                            name="vendedor"
+                            class="form-control"
+                    >
+                        <option v-for="vendedor of vendedores" :key="vendedor.idVendedor">{{vendedor.NomeVendedor}}</option>
+    
+                    </select>
+                </div>
+            </div>
+
+
+<div class="form-group row"  >
+                <label class="col-sm-3 col-form-label" for="cliente">Cliente</label>
+                <div class="col-sm-9">
+                    <select 
+                            id="cliente"
+                            v-model="cliente.nomecompleto"
+                            name="cliente"
+                            class="form-control"
+                    >
+                        <option v-for="cliente of clientes" :key="cliente.id_Cliente">
+                            {{cliente.nomecompleto}}
+                        </option>
+    
+                    </select>
+                </div>
+            </div>
+
+
+
+<div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="faixa_etaria">Pagamento</label>
+                <div class="col-sm-9">
+                    <select
+                            id="pagamento"
+                            v-model="produto.faixaEtaria"
+                            name="faixaEtaria"
+                            class="form-control"
+                    >
+                        <option> Cartão</option>
+                        <option>Dinheiro</option>
+                        
+                    </select>
+                </div>
+            </div>
+
+<div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="nome" >Numero do Cartão</label>
+                <div class="col-sm-9">
+                    <input  
+                            label-for="input"
+                            id="name"
+                            v-model="pagamento.numeroCartao"
+                            type="text"
+                            name="numeroCartao"
+                            class="form-control"
+                            placeholder="Digite aqui seu Cartão, caso sua forma de pagamento for essa"
+                    />
+                </div>
+            </div>
+<div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="preco" >Quantidade Comprada</label>
+                <div class="col-sm-9">
+                    <input  
+                            label-for="input"
+                            id="qtd"
+                            v-model.number="venda.qtdComprada"
+                            type="number"
+                            name="qtd"
+                            class="form-control"
+                    />
+                </div>
+            </div>
+
+         <div class="form-group row">
+                <input type="submit" value="Enviar" variant="primary" size="sm" class="float-right" >
+            </div>    
+            
+</form>
+  </b-modal>
+
+
 
 
     </div>
-
-   
 </template>
 
 <script>
@@ -194,7 +278,14 @@
             return {
                 produto: {},
                 produtos: [],
-                errors: []
+                errors: [],
+                vendedor: {},
+                vendedores: [],
+                cliente:{},
+                clientes:[],
+                pagamento:{},
+                venda: {},
+            
             }
         },
         mounted() {
@@ -206,6 +297,38 @@
         methods: {
 
 
+
+            
+listarProdutos(){
+Produto.listar().then(resposta => {
+                    this.produtos = resposta.data
+                }
+ )
+  
+
+},
+
+vender(){
+this.listarcliente(),
+this.listarVendedor()
+},
+  listarcliente(){
+            
+           Produto.listarcliente().then(resposta2 => {  
+                  this.clientes = resposta2.data
+                }
+            )
+
+          },
+
+listarVendedor(){
+Produto.listarvendedor().then(resposta3 => {  
+                  this.vendedores = resposta3.data
+                }
+            )
+
+          },
+},
 remover(produto){
       if(confirm('Deseja excluir o produto?')){
         Produto.deleteprodutos(produto).then(() => {
@@ -219,15 +342,26 @@ this.produto = {}
       }
     },
 
-
-
-
 editar(produto){
       this.produto= produto
     },
 
 
 
+
+
+efetuarvenda(){
+
+this.venda.nomeProduto=this.produto.nomeProduto
+this.venda.nomeCliente=this.cliente.nomeCliente
+//this.Vendedor_Nome=this.vendedor.Vendedor_Nome
+
+
+ Produto.efetuarvendas(this.venda).then(() => {  
+                alert('Venda Efetuada com Sucesso!!!')                
+                })
+
+},
 
 
 
@@ -265,16 +399,14 @@ salvarproduto() {
           },
 
 
-listarProdutos(){
-Produto.listar().then(resposta => {
-                    this.produtos = resposta.data
-                }
- )
+
+
   
 
-},
-       }
-    }
+}
+
+       
+    
 </script>
 
 <style scoped>
