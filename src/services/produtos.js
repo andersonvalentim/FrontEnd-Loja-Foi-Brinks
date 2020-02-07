@@ -1,10 +1,13 @@
 import {http} from './config'
 
 export default {
-    listarvendedor:()=>{
-        return http.get('vendedor')
-
+    
+    listarfretes: () => {
+        return http.get('fretes')
     },
+
+
+
    efetuarvendas:(vendas)=>{
 return http.post('vendas',vendas)
    },

@@ -3,7 +3,8 @@
     <div class="container">
 
 
-        <form id="app" @submit.prevent="salvarproduto">
+
+<form id="app" @submit.prevent="salvarproduto">
 
  <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="nome" >Nome</label>
@@ -112,7 +113,7 @@
                             label-for="input"
                             id="preco"
                             v-model.number="produto.preco"
-                            type="number"
+                            type="double"
                             name="preco"
                             class="form-control"
                     />
@@ -174,20 +175,19 @@
 
     </div>
         </div>
-<b-modal id="modalvenda" title="Venda">
-
+<b-modal id="modalvenda" title="Venda Produto"  ok-only ok-variant="secondary" ok-title="Cancel" >
 <form id="app" @submit.prevent="efetuarvenda">
-
 <div class="form-group row"  >
-                <label class="col-sm-3 col-form-label" for="faixa_etaria">Vendedor</label>
+                <label class="col-sm-3 col-form-label" for="vendedor">Vendedor</label>
                 <div class="col-sm-9">
                     <select
                             id="vendedor"
-                            v-model="vendedor.NomeVendedor"
+                            v-model="vendedor.vendedor_Nome"
                             name="vendedor"
                             class="form-control"
                     >
-                        <option v-for="vendedor of vendedores" :key="vendedor.idVendedor">{{vendedor.NomeVendedor}}</option>
+                    <option>Jacinto Pinto Aquino Rego</option>
+                    <option>Clodovaldo Honofre</option>
     
                     </select>
                 </div>
@@ -197,16 +197,12 @@
 <div class="form-group row"  >
                 <label class="col-sm-3 col-form-label" for="cliente">Cliente</label>
                 <div class="col-sm-9">
-                    <select 
-                            id="cliente"
-                            v-model="cliente.nomecompleto"
-                            name="cliente"
-                            class="form-control"
-                    >
+                    <select  
+                    v-model="venda.nomeCliente"
+                    id="cliente"  name="cliente" class="form-control">
                         <option v-for="cliente of clientes" :key="cliente.id_Cliente">
                             {{cliente.nomecompleto}}
                         </option>
-    
                     </select>
                 </div>
             </div>
@@ -214,12 +210,12 @@
 
 
 <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="faixa_etaria">Pagamento</label>
+                <label class="col-sm-3 col-form-label" for="formapagamento">Pagamento</label>
                 <div class="col-sm-9">
                     <select
                             id="pagamento"
-                            v-model="produto.faixaEtaria"
-                            name="faixaEtaria"
+                            v-model="venda.formaDePagamento"
+                            name="formadepagamento"
                             class="form-control"
                     >
                         <option> Cartão</option>
@@ -263,10 +259,6 @@
             
 </form>
   </b-modal>
-
-
-
-
     </div>
 </template>
 
@@ -295,75 +287,6 @@
 
 
         methods: {
-
-
-
-            
-listarProdutos(){
-Produto.listar().then(resposta => {
-                    this.produtos = resposta.data
-                }
- )
-  
-
-},
-
-vender(){
-this.listarcliente(),
-this.listarVendedor()
-},
-  listarcliente(){
-            
-           Produto.listarcliente().then(resposta2 => {  
-                  this.clientes = resposta2.data
-                }
-            )
-
-          },
-
-listarVendedor(){
-Produto.listarvendedor().then(resposta3 => {  
-                  this.vendedores = resposta3.data
-                }
-            )
-
-          },
-},
-remover(produto){
-      if(confirm('Deseja excluir o produto?')){
-        Produto.deleteprodutos(produto).then(() => {
-       this.listarProdutos();
-this.errors = {}
-
-this.produto = {}
-        }).catch(e => {
-          this.errors = e.response.data.errors
-        })
-      }
-    },
-
-editar(produto){
-      this.produto= produto
-    },
-
-
-
-
-
-efetuarvenda(){
-
-this.venda.nomeProduto=this.produto.nomeProduto
-this.venda.nomeCliente=this.cliente.nomeCliente
-//this.Vendedor_Nome=this.vendedor.Vendedor_Nome
-
-
- Produto.efetuarvendas(this.venda).then(() => {  
-                alert('Venda Efetuada com Sucesso!!!')                
-                })
-
-},
-
-
 
 salvarproduto() {
         
@@ -397,6 +320,89 @@ salvarproduto() {
         
 
           },
+
+
+
+efetuarvenda(){
+
+/*this.venda.nomeProduto=this.produto.nomeProduto
+this.venda.nomeCliente=this.cliente.nomeCliente 
+this.venda.valorUnidade=this.produto.preco*/
+
+//this.Vendedor_Nome=this.vendedor.Vendedor_Nome
+                
+
+ Produto.efetuarvendas(this.venda).then(() => {  
+                
+                 alert('salvo com sucesso')  
+                })
+
+},
+
+            
+listarProdutos(){
+Produto.listar().then(resposta => {
+                    this.produtos = resposta.data
+                }
+ )
+  
+
+},
+
+vender(produto){
+this.listarcliente()
+this.venda.nomeProduto=produto.nomeProduto
+
+},
+
+editar(produto){
+      this.produto= produto
+    },
+
+
+
+remover(produto){
+      if(confirm('Deseja excluir o produto?')){
+        Produto.deleteprodutos(produto).then(() => {
+       this.listarProdutos();
+this.errors = {}
+
+this.produto = {}
+        }).catch(e => {
+          this.errors = e.response.data.errors
+        })
+      }
+    },
+
+
+
+
+  listarcliente(){
+            
+           Produto.listarcliente().then(resposta2 => {  
+                  this.clientes = resposta2.data
+                }
+            )
+
+          },
+
+
+
+
+
+
+listarVendedor(){
+Produto.listarvendedor().then(resposta3 => {  
+                  this.vendedores = resposta3.data
+                }
+            )
+
+          },
+},
+
+
+
+
 
 
 

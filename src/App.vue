@@ -24,10 +24,10 @@
 
       </b-tab>
 
-        <b-tab title="Adicionar Produto">
 
- <AdicionarProduto/>
+       <b-tab title="Frete de Angicos Para a Lua">
 
+<Frete/>
       </b-tab>
     </b-tabs>
   </b-card>
@@ -52,14 +52,15 @@
 </template>
 
 <script>
-   import Cabecalho from "./components/layout/Cabecalho.vue";
-    import AddClientes from "./components/modal/AddClientes.vue";
+    import Cabecalho from "./components/layout/Cabecalho";
+    import AddClientes from "./components/modal/AddClientes";
     import Conteudo from "./components/Conteudo";
-    import AdicionarProduto from "./components/modal/AdicionarProduto.vue";
+    import Frete from "./components/modal/Frete";
+   /* import AdicionarProduto from "./components/modal/AdicionarProduto.vue";*/
 
     export default {
         components: {
-            Cabecalho,AddClientes,Conteudo,AdicionarProduto
+            Cabecalho,AddClientes,Conteudo,Frete
         }
        
     }
